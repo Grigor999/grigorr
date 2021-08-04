@@ -1,28 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body>
+@extends("layouts.main");
+
+@section("title","Products")
+
+@push("_js")
+
+	<script>
+		alert(1);
+	</script>
+
+@endpush
+
+@section("content")
+
+
 	<div class="container mt-5">
-		<a href="/products/create">New</a>
+		@auth
+			<a href="/products/create">New</a>	
+				
+			@else
+				sign to create
+
+		@endauth
+		
 		<table class="table">
 			<tr>
-				<td>Name</td>
-				<td>Count</td>
-				<td>Price</td>
-				<td>Views</td>
-				<td>Description</td>
-                <td>Action</td>
-			</tr>
-			@foreach($products as $product)
+				<th>#</th>
+				<th>Name</th>
+				<th>Count</th>
+				<th>Price</th>
+				<th>Views</th>
+				<th>Description</th>
+                <th>Action</th>
+			</tr>}
+
+			@foreach($products as $key => $product)
 				<tr>
+					<td>{{ $key+1 }}</td>
+
 					<td>{{ $product->name }}</td>
 					<td>{{ $product->count }}</td>
 					<td>{{ $product->price }}</td>
@@ -40,5 +54,6 @@
 			@endforeach
 		</table>
 	</div>
-</body>
-</html>
+
+@endsection
+

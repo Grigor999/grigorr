@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Requests\ProductRequest;
+
 use App\Models\Product;
 
 class ProductsController extends Controller
 {
     public function index(){
-        $products = Product::Where("count", ">", 20)->get();
+        // $products = Product::where("count", ">", 20)->get();
+        $products = Product::get();
 
-        //dd($products->toArray());
+        // dd($products->toArray());
         return View("pages.products.index", compact("products"));
         
     }
@@ -19,7 +22,19 @@ class ProductsController extends Controller
         return view("pages.products.create");
     }
 
-    public function store(Request $request){
+    public function store (ProductRequest $request){
+
+        // dd(1);
+        // $rules = [
+        //     "name" => "required",
+        //     "price" => "required|numeric|max:10|min:1",
+        //     "count" => "required",
+        // ];
+
+        // $this->validate($request, $rules);
+
+
+
         $name = $request->name; 
         $price = $request->price;
         $count = $request->count;
@@ -31,10 +46,7 @@ class ProductsController extends Controller
         $product->count = $count;
         $product->description = $description;
 
-        $product->views += 1;
-        $product->increment("views");
         $product->save();
-
         return redirect("/products");
     }
 
@@ -45,10 +57,14 @@ class ProductsController extends Controller
         // $product = Product::where("id", $id)->first();
         $product = Product::find($id);
 
+        // $product->views += 1;
+        $product->increment("views");
+        $product->save();
+
         return view("pages.products.edit", compact(["product"]));
 
     }
-    public function update(Request $request, $id){
+    public function update(ProductRequest $request, $id){
 
         $product = Product::find($id);
 

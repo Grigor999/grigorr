@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>Document</title>
-</head>
-<body>
+@extends("layouts.main");
+
+@section("title","Products / Create")
+
+@section("content")
 
     <div class="container mt-5">
+
+        @include("errors.form"){{-- ---verevic grvox erorneri hamar --}}
+
             <form method="POST">
 
                 @csrf
@@ -22,15 +17,33 @@
                     <input type="text" class="fprm-control" name="name">
                 </div>
 
+                    @error('name')
+                        <span class="text-denger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+
                 <div class="form-group">
                     <label>Price</label>
                     <input type="text" class="fprm-control" name="price">
                 </div>
 
+                    @error('price')
+                        <span class="text-denger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+
                 <div class="form-group">
                     <label>Count</label>
                     <input type="text" class="fprm-control" name="count">
                 </div>
+
+                    @error('count')
+                        <span class="text-denger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
 
                 <div class="form-group">
                     <label>Description</label>
@@ -44,5 +57,4 @@
             </form>  
     </div>
     
-</body>
-</html>
+    @endsection
